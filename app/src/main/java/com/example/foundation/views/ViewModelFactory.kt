@@ -1,10 +1,25 @@
 package com.example.foundation.views
 
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
+import com.example.ARG_SCREEN
+import com.example.foundation.BaseApplication
 import java.lang.reflect.Constructor
+
+
+inline fun <reified VM: ViewModel> BaseFragment.screenViewModel() = viewModels<VM> {
+    val application = requireActivity().application as BaseApplication
+    val screen = requireArguments().getSerializable(ARG_SCREEN) as BaseScreen
+
+    val activityScopeViewModel = (requireActivity() as FragmentHolder).getActivityScopeViewModel()
+
+    val dependencies = listOf(screen, activityScopeViewModel) + application.repositories
+
+    ViewModelFactory(dependencies, this)
+}
 
 class ViewModelFactory(
     private val dependencies: List<Any>,
