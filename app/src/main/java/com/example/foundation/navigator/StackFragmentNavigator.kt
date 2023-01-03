@@ -2,6 +2,7 @@ package com.example.foundation.navigator
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -18,6 +19,7 @@ class StackFragmentNavigator(
     private val activity: AppCompatActivity,
     @IdRes private val containerId: Int,
     private val defaultTitle: String,
+    private val animRes:Animation?,
     private val initialScreenCreator: InitialScreenCreator
 ) : Navigator {
 
@@ -55,6 +57,13 @@ class StackFragmentNavigator(
 
         val transaction = activity.supportFragmentManager.beginTransaction()
         if (addToBackStack) transaction.addToBackStack(null)
+        if (animRes != null)
+            transaction.setCustomAnimations(
+                animRes.enterAnim,
+                animRes.exitAnim,
+                animRes.popEnterAnim,
+                animRes.popExitAnim
+            )
         transaction
             .replace(containerId, fragment)
             .commit()
@@ -88,4 +97,11 @@ class StackFragmentNavigator(
             publishResults(f)
         }
     }
+
+    class Animation(
+        @AnimRes val enterAnim: Int,
+        @AnimRes val exitAnim: Int,
+        @AnimRes val popEnterAnim: Int,
+        @AnimRes val popExitAnim: Int,
+    )
 }
