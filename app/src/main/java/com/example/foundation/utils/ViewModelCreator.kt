@@ -9,11 +9,11 @@ typealias ViewModelCreator = () -> ViewModel?
 
 class ViewModelFactory(
     private val creator: ViewModelCreator
-) :ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return creator as T
+        return creator() as T
     }
 
 }

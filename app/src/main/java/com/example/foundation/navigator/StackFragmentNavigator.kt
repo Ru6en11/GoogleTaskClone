@@ -69,7 +69,7 @@ class StackFragmentNavigator(
             .commit()
     }
 
-    private fun notifyScreenUpdates() {
+    fun notifyScreenUpdates() {
         val f = activity.supportFragmentManager.findFragmentById(containerId)
 
         if (activity.supportFragmentManager.backStackEntryCount > 0) {
