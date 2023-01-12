@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.ARG_SCREEN
+import com.example.foundation.ARG_SCREEN
 import com.example.foundation.utils.Event
 import com.example.foundation.views.BaseFragment
 import com.example.foundation.views.BaseScreen

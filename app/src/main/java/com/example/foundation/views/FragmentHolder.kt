@@ -1,6 +1,6 @@
 package com.example.foundation.views
 
-import com.example.ActivityScopeViewModel
+import com.example.foundation.ActivityScopeViewModel
 
 interface FragmentHolder {
 

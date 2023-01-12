@@ -1,4 +1,4 @@
-package com.example
+package com.example.foundation
 
 import androidx.lifecycle.ViewModel
 import com.example.foundation.navigator.IntermediateNavigator

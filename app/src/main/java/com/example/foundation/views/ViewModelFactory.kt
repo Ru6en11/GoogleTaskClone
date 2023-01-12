@@ -5,7 +5,7 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.ARG_SCREEN
+import com.example.foundation.ARG_SCREEN
 import com.example.foundation.BaseApplication
 import java.lang.reflect.Constructor
 
