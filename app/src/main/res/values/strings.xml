@@ -5,4 +5,5 @@
     <string name="create_task_fab_description">Создать задачу</string>
     <string name="accounts">Аккаунты</string>
     <string name="more">Еще</string>
+    <string name="favourite_button">добавить в избранное</string>
 </resources>
