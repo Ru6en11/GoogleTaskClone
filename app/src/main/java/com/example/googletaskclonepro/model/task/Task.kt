@@ -1,6 +1,5 @@
 package com.example.googletaskclonepro.model.task
 
-import android.os.Parcelable
 import java.util.UUID
 
 data class Task(
