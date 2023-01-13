@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">GoogleTaskClonePro</string>
     <string name="main_title">Задачи</string>
+    <string name="app_title">Задачи</string>
+    <string name="create_task_fab_description">Создать задачу</string>
+    <string name="accounts">Аккаунты</string>
+    <string name="more">Еще</string>
 </resources>
