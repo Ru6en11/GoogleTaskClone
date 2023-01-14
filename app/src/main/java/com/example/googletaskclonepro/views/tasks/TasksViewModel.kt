@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.foundation.views.BaseViewModel
 import com.example.googletaskclonepro.model.task.Task
 
-class TasksViewModel : BaseViewModel() {
+class TasksViewModel(
+    private val taskRepository: InDatabaseTaskRepository
+) : BaseViewModel() {
 
     private val _tasks = MutableLiveData<List<Task>>()
     val tasks: LiveData<List<Task>> = _tasks
