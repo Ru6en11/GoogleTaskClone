@@ -1,11 +1,15 @@
 package com.example.googletaskclonepro.views.tasks
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.example.googletaskclonepro.database.TaskDatabase
 import com.example.googletaskclonepro.model.task.Task
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import java.util.*
+import java.util.concurrent.Executors
 
 private const val DATABASE_NAME = "tasks-database"
 
@@ -24,7 +28,7 @@ class InDatabaseTaskRepository private constructor(context: Context): TaskReposi
 
     override fun getTasks(): LiveData<List<Task>> = tasksDao.getTasks()
 
-    override fun updateTask(task: Task) {
+    override suspend fun updateTask(task: Task) {
         tasks.forEachIndexed { ind, t ->
             if (t.id == task.id) {
                 tasks[ind] = task
@@ -34,12 +38,13 @@ class InDatabaseTaskRepository private constructor(context: Context): TaskReposi
 
     }
 
-    override fun removeTask(task: Task) {
+    override suspend fun removeTask(task: Task) {
         tasks.remove(task)
         tasksDao.deleteTask(task)
     }
 
-    override fun add(task: Task) {
+    override suspend fun add(task: Task) {
+        Log.d("tag", "add ")
         tasks.add(task)
         tasksDao.addTask(task)
     }
