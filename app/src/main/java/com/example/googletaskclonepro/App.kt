@@ -3,7 +3,7 @@ package com.example.googletaskclonepro
 import android.app.Application
 import com.example.foundation.BaseApplication
 import com.example.foundation.model.Repository
-import com.example.googletaskclonepro.views.tasks.InDatabaseTaskRepository
+import com.example.googletaskclonepro.model.task.InDatabaseTaskRepository
 
 class App() : Application(), BaseApplication {
 

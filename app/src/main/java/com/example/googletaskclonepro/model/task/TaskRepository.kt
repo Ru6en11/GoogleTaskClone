@@ -1,4 +1,4 @@
-package com.example.googletaskclonepro.views.tasks
+package com.example.googletaskclonepro.model.task
 
 import androidx.lifecycle.LiveData
 import com.example.foundation.model.Repository

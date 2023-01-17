@@ -1,4 +1,4 @@
-package com.example.googletaskclonepro.views.tasks
+package com.example.googletaskclonepro.model.task
 
 import android.content.Context
 import android.util.Log
