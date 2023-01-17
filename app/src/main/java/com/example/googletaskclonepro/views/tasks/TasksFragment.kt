@@ -1,5 +1,6 @@
 package com.example.googletaskclonepro.views.tasks
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import com.example.foundation.views.BaseFragment
 import com.example.foundation.views.BaseScreen
 import com.example.foundation.views.screenViewModel
@@ -16,13 +19,22 @@ import com.example.googletaskclonepro.databinding.CreateTaskBottomSheetDialogBin
 import com.example.googletaskclonepro.databinding.FragmentTasksBinding
 import com.example.googletaskclonepro.model.task.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout.Tab
+import com.google.android.material.tabs.TabLayoutMediator
 
-class TasksFragment : BaseFragment() {
+val categories = arrayOf(
+    "Избранные",
+    "Мои задачи",
+    "Выполненые"
+)
+
+class TasksFragment : BaseFragment(), TasksListener {
 
     class Screen : BaseScreen
 
-    private lateinit var binding: FragmentTasksBinding
     override val viewModel: TasksViewModel by screenViewModel()
+    private lateinit var binding: FragmentTasksBinding
+    private lateinit var viewPager2Adapter: ViewPager2Adapter
     private lateinit var createTaskDialog: BottomSheetDialog
 
     override fun onCreateView(
@@ -31,6 +43,20 @@ class TasksFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTasksBinding.inflate(inflater, container, false)
+
+        viewPager2Adapter = ViewPager2Adapter(this)
+        binding.categoryViewPager2.adapter = viewPager2Adapter
+
+        TabLayoutMediator(binding.categoryTabLayout, binding.categoryViewPager2) {tab, position ->
+
+            if (position == 0) {
+                tab.setIcon(R.drawable.ic_star)
+                val tabIconColor = ContextCompat.getColor(requireContext(), R.color.blue)
+                tab.icon?.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN)
+            } else {
+                tab.text = categories[position]
+            }
+        }.attach()
 
         createTaskDialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)
         createTaskDialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
@@ -47,9 +73,10 @@ class TasksFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.tasks.observe(viewLifecycleOwner) {
-            Log.d("tag", "${it}")
-        }
+//        viewModel.tasks.observe(viewLifecycleOwner) {
+//            Log.d("tag", "${it}")
+//            viewPager2Adapter.adapters[0].tasks = it.toMutableList()
+//        }
     }
 
     private fun renderCreateTaskDialog() {
@@ -97,6 +124,26 @@ class TasksFragment : BaseFragment() {
             }
         }
 
+    }
+
+    override fun onClickTask(task: Task) {
+        viewModel.updateTask(task)
+    }
+
+    override fun showTaskScreen(task: Task) {
+        //show task detail
+    }
+
+    override fun onMoveTask(from: Int, to: Int) {
+        //move items
+    }
+
+    override fun observeData(lifecycleOwner: LifecycleOwner, adapter: TasksAdapter, position: Int) {
+        when (position) {
+            0 -> viewModel.tasks.observe(lifecycleOwner) { adapter.tasks = it.toMutableList() }
+            1 -> viewModel.tasks.observe(lifecycleOwner) { adapter.tasks = it.toMutableList() }
+            3 -> viewModel.tasks.observe(lifecycleOwner) { adapter.tasks = it.toMutableList() }
+        }
     }
 
 }

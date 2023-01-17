@@ -1,13 +1,16 @@
 package com.example.googletaskclonepro.views.tasks
 
+import androidx.lifecycle.LifecycleOwner
 import com.example.googletaskclonepro.model.task.Task
 
-interface TasksListener {
+interface TasksListener : java.io.Serializable {
 
     fun onClickTask(task: Task)
 
     fun showTaskScreen(task:Task)
 
     fun onMoveTask(from: Int, to: Int)
+
+    fun observeData(lifecycleOwner: LifecycleOwner, adapter: TasksAdapter, position: Int)
 
 }
