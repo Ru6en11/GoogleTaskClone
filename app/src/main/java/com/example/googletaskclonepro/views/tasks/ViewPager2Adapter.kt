@@ -37,7 +37,6 @@ class CategoryFragment : Fragment() {
         super.onCreate(savedInstanceState)
         listener = requireArguments().getSerializable(ARG_LISTENER) as TasksListener
         position = requireArguments().getInt(ARG_POSITION)
-        this.listener = listener
         adapter = TasksAdapter(listener)
     }
 
