@@ -4,7 +4,6 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +25,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 const val EVENT_ARG_TASK = "event_arg_task"
 const val EVENT_ARG_POSITION = "event_arg_position"
+const val EVENT_DELETING_TASK = "event_deleting_task"
 
 val categories = arrayOf(
     "Избранные",
@@ -58,6 +58,7 @@ class TasksFragment : BaseFragment(), TasksListener {
             if (position == 0) {
                 tab.setIcon(R.drawable.ic_star)
                 val tabIconColor = ContextCompat.getColor(requireContext(), R.color.blue)
+                @Suppress("DEPRECATION")
                 tab.icon?.setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN)
             } else {
                 tab.text = categories[position]
@@ -78,13 +79,13 @@ class TasksFragment : BaseFragment(), TasksListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setFragmentResultListener("111") { key, bundle ->
+
+        //FIXME sometimes not working
+        setFragmentResultListener(EVENT_DELETING_TASK) { _, bundle ->
             deletingMode = true
-            Log.d("delete", "setFragmentResult")
             @Suppress("DEPRECATION")
             val task = bundle.getParcelable<Task>(EVENT_ARG_TASK) as Task
             val position = bundle.getInt(EVENT_ARG_POSITION)
-            Log.d("delete", "position $position")
             val snackbar = Snackbar.make(view, "Задача удалена", Snackbar.LENGTH_LONG)
 
             val deletingItemPos: Int? = adapters[position].removeItem(task)
@@ -163,8 +164,8 @@ class TasksFragment : BaseFragment(), TasksListener {
         viewModel.updateTask(task)
     }
 
-    override fun showTaskScreen(task: Task, adapterPostion: Int) {
-        viewModel.onShowDetailsCalled(task, adapterPostion)
+    override fun showTaskScreen(task: Task, adapterPosition: Int) {
+        viewModel.onShowDetailsCalled(task, adapterPosition)
     }
 
     override fun onMoveTask(from: Int, to: Int) {

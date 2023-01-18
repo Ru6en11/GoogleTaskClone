@@ -17,6 +17,7 @@ import com.example.googletaskclonepro.databinding.FragmentDetailBinding
 import com.example.googletaskclonepro.model.task.Task
 import com.example.googletaskclonepro.views.tasks.EVENT_ARG_POSITION
 import com.example.googletaskclonepro.views.tasks.EVENT_ARG_TASK
+import com.example.googletaskclonepro.views.tasks.EVENT_DELETING_TASK
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -34,6 +35,7 @@ class DetailFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        @Suppress("DEPRECATION")
         val screen = requireArguments().getSerializable(ARG_SCREEN) as Screen
         adapterPosition = screen.position
         viewModel.load(screen.id)
@@ -67,7 +69,8 @@ class DetailFragment : BaseFragment() {
         }
 
         binding.deleteImageButton.setOnClickListener {
-            setFragmentResult("111", bundleOf(
+            setFragmentResult(
+                EVENT_DELETING_TASK, bundleOf(
                 EVENT_ARG_TASK to viewModel.task.value,
                 EVENT_ARG_POSITION to adapterPosition)
             )
