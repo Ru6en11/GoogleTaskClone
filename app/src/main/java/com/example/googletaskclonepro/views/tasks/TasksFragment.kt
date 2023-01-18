@@ -4,7 +4,6 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import com.example.googletaskclonepro.databinding.CreateTaskBottomSheetDialogBin
 import com.example.googletaskclonepro.databinding.FragmentTasksBinding
 import com.example.googletaskclonepro.model.task.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.tabs.TabLayout.Tab
 import com.google.android.material.tabs.TabLayoutMediator
 
 val categories = arrayOf(
@@ -68,15 +66,6 @@ class TasksFragment : BaseFragment(), TasksListener {
         }
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-//        viewModel.tasks.observe(viewLifecycleOwner) {
-//            Log.d("tag", "${it}")
-//            viewPager2Adapter.adapters[0].tasks = it.toMutableList()
-//        }
     }
 
     private fun renderCreateTaskDialog() {
