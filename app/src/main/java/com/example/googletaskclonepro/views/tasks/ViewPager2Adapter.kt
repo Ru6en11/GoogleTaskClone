@@ -52,6 +52,9 @@ class CategoryFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
+        val touchHelper = TasksItemTouchHelper()
+        touchHelper.itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
         listener.observeData(viewLifecycleOwner, adapter, position)
 
         return binding.root
