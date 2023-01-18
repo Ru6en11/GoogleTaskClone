@@ -18,7 +18,7 @@ import com.example.foundation.views.screenViewModel
 import com.example.googletaskclonepro.R
 import com.example.googletaskclonepro.databinding.CreateTaskBottomSheetDialogBinding
 import com.example.googletaskclonepro.databinding.FragmentTasksBinding
-import com.example.googletaskclonepro.databinding.PageSelectorBootomSheetDialogBinding
+import com.example.googletaskclonepro.databinding.PageSelectorBottomSheetDialogBinding
 import com.example.googletaskclonepro.model.task.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -171,7 +171,7 @@ class TasksFragment : BaseFragment(), TasksListener {
     }
 
     private fun renderPageSelectorDialog() {
-        val dialogBinding = PageSelectorBootomSheetDialogBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+        val dialogBinding = PageSelectorBottomSheetDialogBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         pageSelectorDialog.setContentView(dialogBinding.root)
 
         dialogBinding.favouriteTasksButton.setOnClickListener {
