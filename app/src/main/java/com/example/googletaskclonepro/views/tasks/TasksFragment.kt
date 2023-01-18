@@ -140,9 +140,9 @@ class TasksFragment : BaseFragment(), TasksListener {
 
     override fun observeData(lifecycleOwner: LifecycleOwner, adapter: TasksAdapter, position: Int) {
         when (position) {
-            0 -> viewModel.tasks.observe(lifecycleOwner) { adapter.tasks = it.toMutableList() }
+            0 -> viewModel.favouriteTasks.observe(lifecycleOwner) { adapter.tasks = it.toMutableList() }
             1 -> viewModel.tasks.observe(lifecycleOwner) { adapter.tasks = it.toMutableList() }
-            3 -> viewModel.tasks.observe(lifecycleOwner) { adapter.tasks = it.toMutableList() }
+            2 -> viewModel.completedTask.observe(lifecycleOwner) { adapter.tasks = it.toMutableList() }
         }
     }
 

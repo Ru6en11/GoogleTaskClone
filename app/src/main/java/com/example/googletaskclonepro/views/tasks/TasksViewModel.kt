@@ -15,6 +15,8 @@ class TasksViewModel(
 
     private val _tasks = MutableLiveData<List<Task>>()
     val tasks: LiveData<List<Task>> = taskRepository.getTasks()
+    val favouriteTasks = taskRepository.getFavouriteTasks()
+    val completedTask = taskRepository.getCompletedTasks()
 
     fun updateTask(task: Task) {
         viewModelScope.launch(Dispatchers.IO) {

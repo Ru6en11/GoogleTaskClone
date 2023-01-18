@@ -50,7 +50,7 @@ class CategoryFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
-        listener.observeData(viewLifecycleOwner, adapter, 0)
+        listener.observeData(viewLifecycleOwner, adapter, position)
 
         return binding.root
     }
