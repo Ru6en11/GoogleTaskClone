@@ -10,4 +10,10 @@
     <string name="title">Title...</string>
     <string name="add_details">Add details</string>
     <string name="set_time">set time</string>
+    <string name="mark_completed">Mark completed</string>
+    <string name="mark_uncompleted">Mark uncompleted</string>
+    <string name="enter_title">Enter title</string>
+    <string name="go_back">go back</string>
+    <string name="add_to_favourite">add to favourite</string>
+    <string name="delete_task">delete task</string>
 </resources>
