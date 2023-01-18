@@ -20,4 +20,5 @@
     <string name="my_tasks">My tasks</string>
     <string name="completed">Completed</string>
     <string name="create_new_list">Create new list</string>
+    <string name="done">Done</string>
 </resources>

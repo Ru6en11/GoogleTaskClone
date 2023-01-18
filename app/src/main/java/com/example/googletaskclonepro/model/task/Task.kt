@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
-import java.util.UUID
+import java.util.*
 
 @Parcelize
 @Entity
@@ -13,5 +13,6 @@ data class Task(
     var isCompleted: Boolean,
     var text: String,
     var additionalInfo: String,
-    var isFavourite: Boolean
+    var isFavourite: Boolean,
+    var time: Date = Date()
 ) : Parcelable
