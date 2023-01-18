@@ -50,7 +50,7 @@ class StackFragmentNavigator(
         activity.supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentCallbacks)
     }
 
-    fun launchFragment(screen: BaseScreen, addToBackStack: Boolean = false) {
+    fun launchFragment(screen: BaseScreen, addToBackStack: Boolean = true) {
 
         val fragment = screen.javaClass.enclosingClass.newInstance() as Fragment
         fragment.arguments = bundleOf(ARG_SCREEN to screen)
