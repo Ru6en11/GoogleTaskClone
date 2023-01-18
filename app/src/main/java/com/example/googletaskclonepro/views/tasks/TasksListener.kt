@@ -7,7 +7,7 @@ interface TasksListener : java.io.Serializable {
 
     fun onClickTask(task: Task)
 
-    fun showTaskScreen(task:Task)
+    fun showTaskScreen(task:Task, adapterPosition: Int)
 
     fun onMoveTask(from: Int, to: Int)
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foundation.navigator.Navigator
 import com.example.foundation.views.BaseViewModel
-import com.example.googletaskclonepro.model.task.InDatabaseTaskRepository
 import com.example.googletaskclonepro.model.task.Task
 import com.example.googletaskclonepro.model.task.TaskRepository
 import com.example.googletaskclonepro.views.detail.DetailFragment
@@ -45,8 +44,8 @@ class TasksViewModel(
 //        taskRepository.add(task)
     }
 
-    fun onShowDetailsCalled(task: Task) {
-        navigator.launch(DetailFragment.Screen(task.id))
+    fun onShowDetailsCalled(task: Task, adapterPosition: Int) {
+        navigator.launch(DetailFragment.Screen(task.id, adapterPosition))
     }
 
 

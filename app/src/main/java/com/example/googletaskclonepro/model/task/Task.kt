@@ -1,9 +1,12 @@
 package com.example.googletaskclonepro.model.task
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 import java.util.UUID
 
+@Parcelize
 @Entity
 data class Task(
     @PrimaryKey val id: UUID = UUID.randomUUID(),
@@ -11,4 +14,4 @@ data class Task(
     var text: String,
     var additionalInfo: String,
     var isFavourite: Boolean
-)
+) : Parcelable

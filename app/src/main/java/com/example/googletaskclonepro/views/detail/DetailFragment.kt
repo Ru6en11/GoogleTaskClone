@@ -6,6 +6,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import com.example.foundation.ARG_SCREEN
 import com.example.foundation.views.BaseFragment
 import com.example.foundation.views.BaseScreen
@@ -13,21 +15,27 @@ import com.example.foundation.views.screenViewModel
 import com.example.googletaskclonepro.R
 import com.example.googletaskclonepro.databinding.FragmentDetailBinding
 import com.example.googletaskclonepro.model.task.Task
+import com.example.googletaskclonepro.views.tasks.EVENT_ARG_POSITION
+import com.example.googletaskclonepro.views.tasks.EVENT_ARG_TASK
 import java.util.*
+import kotlin.properties.Delegates
 
 class DetailFragment : BaseFragment() {
 
     class Screen(
-        val id: UUID
+        val id: UUID,
+        val position: Int
     ) : BaseScreen
 
-    override val viewModel: DetailViewModel by screenViewModel<DetailViewModel>()
+    override val viewModel: DetailViewModel by screenViewModel()
     private lateinit var binding: FragmentDetailBinding
     private lateinit var task: Task
+    private var adapterPosition by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val screen = requireArguments().getSerializable(ARG_SCREEN) as Screen
+        adapterPosition = screen.position
         viewModel.load(screen.id)
     }
 
@@ -59,7 +67,11 @@ class DetailFragment : BaseFragment() {
         }
 
         binding.deleteImageButton.setOnClickListener {
-            viewModel.delete()
+            setFragmentResult("111", bundleOf(
+                EVENT_ARG_TASK to viewModel.task.value,
+                EVENT_ARG_POSITION to adapterPosition
+            )
+            )
             viewModel.goBackPressed()
         }
 

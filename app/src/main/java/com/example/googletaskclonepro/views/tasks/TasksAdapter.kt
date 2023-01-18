@@ -9,7 +9,7 @@ import com.example.googletaskclonepro.databinding.TaskItemBinding
 import com.example.googletaskclonepro.model.task.Task
 import java.util.*
 
-class TasksAdapter(private val listener: TasksListener) : RecyclerView.Adapter<TasksAdapter.TasksViewHolder>() {
+class TasksAdapter(private val listener: TasksListener, private val adapterPos: Int) : RecyclerView.Adapter<TasksAdapter.TasksViewHolder>() {
 
     var tasks: MutableList<Task> = mutableListOf()
             set(newValue) {
@@ -24,7 +24,7 @@ class TasksAdapter(private val listener: TasksListener) : RecyclerView.Adapter<T
         fun bind(task: Task) = binding.run {
 
             root.setOnClickListener {
-                listener.showTaskScreen(task)
+                listener.showTaskScreen(task, adapterPos)
             }
 
             isCompletedCheckBox.isChecked = task.isCompleted
@@ -75,6 +75,34 @@ class TasksAdapter(private val listener: TasksListener) : RecyclerView.Adapter<T
     fun moveItem(from: Int, to: Int) {
         Collections.swap(tasks, from, to)
         listener.onMoveTask(from, to)
+    }
+
+    fun addItem(item: Task, pos: Int? = null) {
+
+        val _tasks = mutableListOf<Task>()
+        tasks.forEach { _tasks.add(it) }
+
+        if (pos == null)
+            _tasks.add(item)
+        else _tasks.add(pos, item)
+
+        tasks = _tasks
+    }
+
+    fun removeItem(item: Task): Int? {
+
+        val _tasks = mutableListOf<Task>()
+        tasks.forEach { _tasks.add(it) }
+
+        for (i in 0 until _tasks.size) {
+            if (item.id == _tasks[i].id) {
+                _tasks.remove(item)
+                tasks = _tasks
+
+                return i
+            }
+        }
+        return null
     }
 
 }
