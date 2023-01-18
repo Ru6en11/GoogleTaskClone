@@ -120,7 +120,7 @@ class TasksFragment : BaseFragment(), TasksListener {
     }
 
     override fun showTaskScreen(task: Task) {
-        //show task detail
+        viewModel.onShowDetailsCalled(task)
     }
 
     override fun onMoveTask(from: Int, to: Int) {

@@ -3,14 +3,18 @@ package com.example.googletaskclonepro.views.tasks
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.foundation.navigator.Navigator
 import com.example.foundation.views.BaseViewModel
 import com.example.googletaskclonepro.model.task.InDatabaseTaskRepository
 import com.example.googletaskclonepro.model.task.Task
+import com.example.googletaskclonepro.model.task.TaskRepository
+import com.example.googletaskclonepro.views.detail.DetailFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TasksViewModel(
-    private val taskRepository: InDatabaseTaskRepository
+    private val navigator: Navigator,
+    private val taskRepository: TaskRepository
 ) : BaseViewModel() {
 
     private val _tasks = MutableLiveData<List<Task>>()
@@ -39,6 +43,10 @@ class TasksViewModel(
             taskRepository.add(task)
         }
 //        taskRepository.add(task)
+    }
+
+    fun onShowDetailsCalled(task: Task) {
+        navigator.launch(DetailFragment.Screen(task.id))
     }
 
 

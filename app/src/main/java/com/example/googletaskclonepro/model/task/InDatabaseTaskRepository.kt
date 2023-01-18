@@ -30,6 +30,8 @@ class InDatabaseTaskRepository private constructor(context: Context): TaskReposi
     override fun getFavouriteTasks(): LiveData<List<Task>> = tasksDao.getFavouriteTasks()
     override fun getCompletedTasks(): LiveData<List<Task>> = tasksDao.getCompletedTasks()
 
+    override fun getById(id: UUID): LiveData<Task?> = tasksDao.getTask(id)
+
     override suspend fun updateTask(task: Task) {
         tasks.forEachIndexed { ind, t ->
             if (t.id == task.id) {

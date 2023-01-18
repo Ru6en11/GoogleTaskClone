@@ -2,7 +2,7 @@ package com.example.googletaskclonepro.model.task
 
 import androidx.lifecycle.LiveData
 import com.example.foundation.model.Repository
-import com.example.googletaskclonepro.model.task.Task
+import java.util.*
 
 
 interface TaskRepository : Repository {
@@ -10,6 +10,8 @@ interface TaskRepository : Repository {
     fun getTasks(): LiveData<List<Task>>
     fun getFavouriteTasks(): LiveData<List<Task>>
     fun getCompletedTasks(): LiveData<List<Task>>
+
+    fun getById(id: UUID): LiveData<Task?>
 
     suspend fun updateTask(task: Task)
 
