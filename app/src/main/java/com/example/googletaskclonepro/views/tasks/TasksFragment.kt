@@ -1,5 +1,13 @@
 package com.example.googletaskclonepro.views.tasks
 
+import android.app.AlarmManager
+import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
@@ -20,10 +28,13 @@ import com.example.googletaskclonepro.databinding.CreateTaskBottomSheetDialogBin
 import com.example.googletaskclonepro.databinding.FragmentTasksBinding
 import com.example.googletaskclonepro.databinding.PageSelectorBottomSheetDialogBinding
 import com.example.googletaskclonepro.model.task.Task
+import com.example.googletaskclonepro.utils.*
+import com.example.googletaskclonepro.views.TimePickerDialog
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
+import java.util.*
 
 const val EVENT_ARG_TASK = "event_arg_task"
 const val EVENT_ARG_POSITION = "event_arg_position"
@@ -35,7 +46,7 @@ val categories = arrayOf(
     "Выполненые"
 )
 
-class TasksFragment : BaseFragment(), TasksListener {
+class TasksFragment : BaseFragment(), TasksListener, TimePickerDialog.Callbacks {
 
     class Screen : BaseScreen
 
@@ -45,6 +56,12 @@ class TasksFragment : BaseFragment(), TasksListener {
     private lateinit var createTaskDialog: BottomSheetDialog
     private lateinit var pageSelectorDialog: BottomSheetDialog
     private var deletingMode = false
+    private var date: Date? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        createNotificationChannel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -139,6 +156,13 @@ class TasksFragment : BaseFragment(), TasksListener {
             )
         }
 
+        dialogBinding.setTimeImageBtn.setOnClickListener {
+            TimePickerDialog().apply {
+                setTargetFragment(this@TasksFragment, 0)
+                show(this@TasksFragment.parentFragmentManager, "dialog_date")
+            }
+        }
+
         dialogBinding.taskTitleEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -154,6 +178,9 @@ class TasksFragment : BaseFragment(), TasksListener {
                 additionalInfo = dialogBinding.additionalInfoEditText.text.toString(),
                 isFavourite = dialogBinding.addInFavouriteCheckBox.isChecked
             )
+            date?.let {
+                scheduleNotification(task.text, task.additionalInfo)
+            }
             viewModel.createTask(task)
             createTaskDialog.dismiss()
         }
@@ -213,6 +240,73 @@ class TasksFragment : BaseFragment(), TasksListener {
             1 -> viewModel.tasks.observe(lifecycleOwner) { if(!deletingMode) adapter.tasks = it.toMutableList() }
             2 -> viewModel.completedTask.observe(lifecycleOwner) { if(!deletingMode) adapter.tasks = it.toMutableList() }
         }
+    }
+
+    private fun scheduleNotification(title: String, message: String) {
+        val intent = Intent(requireContext().applicationContext, Notification::class.java)
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, message)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext().applicationContext,
+            notificationId,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val time = getTime()
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent
+        )
+        showAlert(time, title, message)
+    }
+
+    private fun showAlert(time: Long, title: String, message: String) {
+        val date = Date(time)
+        val dateFormat = android.text.format.DateFormat.getLongDateFormat(requireContext().applicationContext)
+        val timeFormat = android.text.format.DateFormat.getTimeFormat(requireContext().applicationContext)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Notification scheduled")
+            .setMessage(
+                "Title " + title +
+                        "\nMessage: " + message +
+                        "\nAt " + dateFormat.format(date) + " " + timeFormat.format(date)
+            )
+            .setPositiveButton("Ok", {_,_ ->})
+            .show()
+    }
+
+    private fun getTime(): Long {
+
+        val time = Calendar.getInstance()
+        time.time = date
+
+        val calendar = Calendar.getInstance()
+        calendar.set(
+            time.get(Calendar.YEAR),
+            time.get(Calendar.MONTH),
+            time.get(Calendar.DAY_OF_MONTH),
+            time.get(Calendar.HOUR),
+            time.get(Calendar.MINUTE))
+        return calendar.timeInMillis
+    }
+
+    private fun createNotificationChannel() {
+        val name = "Notif chanel"
+        val desc = "A description of the Channel"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(chanelId, name, importance)
+        channel.description = desc
+        val notificationManager = requireContext().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    override fun onTimeSelected(date: Date) {
+        this.date = date
     }
 
 }
