@@ -14,6 +14,7 @@ import kotlin.properties.Delegates
 const val ARG_LISTENER = "com.example.googletaskclonepro.views.tasks.arg_listener"
 const val ARG_POSITION = "com.example.googletaskclonepro.views.tasks.arg_position"
 private const val TAB_COUNT = 3
+val adapters = mutableListOf<TasksAdapter>()
 
 class ViewPager2Adapter(private val f: TasksFragment) : FragmentStateAdapter(f), java.io.Serializable {
 
@@ -38,6 +39,7 @@ class CategoryFragment : Fragment() {
         listener = requireArguments().getSerializable(ARG_LISTENER) as TasksListener
         position = requireArguments().getInt(ARG_POSITION)
         adapter = TasksAdapter(listener)
+        adapters.add(adapter)
     }
 
     override fun onCreateView(
