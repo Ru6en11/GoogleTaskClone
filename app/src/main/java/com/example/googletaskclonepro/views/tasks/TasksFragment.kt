@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.LifecycleOwner
@@ -17,6 +18,7 @@ import com.example.foundation.views.screenViewModel
 import com.example.googletaskclonepro.R
 import com.example.googletaskclonepro.databinding.CreateTaskBottomSheetDialogBinding
 import com.example.googletaskclonepro.databinding.FragmentTasksBinding
+import com.example.googletaskclonepro.databinding.PageSelectorBootomSheetDialogBinding
 import com.example.googletaskclonepro.model.task.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -41,6 +43,7 @@ class TasksFragment : BaseFragment(), TasksListener {
     private lateinit var binding: FragmentTasksBinding
     private lateinit var viewPager2Adapter: ViewPager2Adapter
     private lateinit var createTaskDialog: BottomSheetDialog
+    private lateinit var pageSelectorDialog: BottomSheetDialog
     private var deletingMode = false
 
     override fun onCreateView(
@@ -67,11 +70,18 @@ class TasksFragment : BaseFragment(), TasksListener {
 
         createTaskDialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)
         createTaskDialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-
         renderCreateTaskDialog()
+
+        pageSelectorDialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)
+        pageSelectorDialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        renderPageSelectorDialog()
 
         binding.createItemFab.setOnClickListener {
             createTaskDialog.show()
+        }
+
+        binding.bottomAppBar.setNavigationOnClickListener {
+            pageSelectorDialog.show()
         }
 
         return binding.root
@@ -158,6 +168,31 @@ class TasksFragment : BaseFragment(), TasksListener {
             }
         }
 
+    }
+
+    private fun renderPageSelectorDialog() {
+        val dialogBinding = PageSelectorBootomSheetDialogBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+        pageSelectorDialog.setContentView(dialogBinding.root)
+
+        dialogBinding.favouriteTasksButton.setOnClickListener {
+            val tab = binding.categoryTabLayout.getTabAt(0)
+            tab?.select()
+            pageSelectorDialog.dismiss()
+        }
+        dialogBinding.myTasksButton.setOnClickListener {
+            val tab = binding.categoryTabLayout.getTabAt(1)
+            tab?.select()
+            pageSelectorDialog.dismiss()
+
+        }
+        dialogBinding.completedTasksButton.setOnClickListener {
+            val tab = binding.categoryTabLayout.getTabAt(2)
+            tab?.select()
+            pageSelectorDialog.dismiss()
+        }
+        dialogBinding.createNewListButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Для доступа к этой функции оформите подписку", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onClickTask(task: Task) {
