@@ -80,14 +80,14 @@ class TasksFragment : BaseFragment(), TasksListener {
         super.onViewCreated(view, savedInstanceState)
         setFragmentResultListener("111") { key, bundle ->
             deletingMode = true
-
+            Log.d("delete", "setFragmentResult")
             @Suppress("DEPRECATION")
             val task = bundle.getParcelable<Task>(EVENT_ARG_TASK) as Task
             val position = bundle.getInt(EVENT_ARG_POSITION)
+            Log.d("delete", "position $position")
             val snackbar = Snackbar.make(view, "Задача удалена", Snackbar.LENGTH_LONG)
 
             val deletingItemPos: Int? = adapters[position].removeItem(task)
-            Log.d("delete", "pos $deletingItemPos")
 
             var flagDeleteTask = true
 

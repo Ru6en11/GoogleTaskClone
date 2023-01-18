@@ -1,20 +1,47 @@
 package com.example.googletaskclonepro.views.tasks
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.googletaskclonepro.R
 import com.example.googletaskclonepro.databinding.TaskItemBinding
 import com.example.googletaskclonepro.model.task.Task
 import java.util.*
 
+class TasksDiffCallback(
+    private val oldList: List<Task>,
+    private val newList: List<Task>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldTask = oldList[oldItemPosition]
+        val newTask = newList[newItemPosition]
+        return oldTask.id == newTask.id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldTask = oldList[oldItemPosition]
+        val newTask = newList[newItemPosition]
+        return oldTask == newTask
+    }
+
+}
+
 class TasksAdapter(private val listener: TasksListener, private val adapterPos: Int) : RecyclerView.Adapter<TasksAdapter.TasksViewHolder>() {
 
     var tasks: MutableList<Task> = mutableListOf()
             set(newValue) {
+                val diffCallback = TasksDiffCallback(field, newValue)
+                val diffResult = DiffUtil.calculateDiff(diffCallback)
                 field = newValue
-                notifyDataSetChanged()
+                diffResult.dispatchUpdatesTo(this)
             }
 
     inner class TasksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -41,7 +68,7 @@ class TasksAdapter(private val listener: TasksListener, private val adapterPos: 
             isCompletedCheckBox.setOnClickListener {
                 task.isCompleted = isCompletedCheckBox.isChecked
                 listener.onClickTask(task)
-                notifyDataSetChanged()
+                notifyDataChanged()
             }
 
             val imageRes = if (task.isFavourite) R.drawable.ic_star else R.drawable.ic_star_border
@@ -52,7 +79,7 @@ class TasksAdapter(private val listener: TasksListener, private val adapterPos: 
                 listener.onClickTask(task)
                 val imRes = if (task.isFavourite) R.drawable.ic_star else R.drawable.ic_star_border
                 isFavouriteImageButton.setImageResource(imRes)
-                notifyDataSetChanged()
+                notifyDataChanged()
             }
 
         }
@@ -71,6 +98,11 @@ class TasksAdapter(private val listener: TasksListener, private val adapterPos: 
     }
 
     override fun getItemCount(): Int = tasks.size
+
+    private fun notifyDataChanged() {
+        val _tasks = tasks
+        tasks = _tasks
+    }
 
     fun moveItem(from: Int, to: Int) {
         Collections.swap(tasks, from, to)
@@ -96,7 +128,9 @@ class TasksAdapter(private val listener: TasksListener, private val adapterPos: 
 
         for (i in 0 until _tasks.size) {
             if (item.id == _tasks[i].id) {
-                _tasks.remove(item)
+                Log.d("delete", "before remove ${_tasks.size}")
+                _tasks.removeAt(i)
+                Log.d("delete", "after remove ${_tasks.size}")
                 tasks = _tasks
 
                 return i

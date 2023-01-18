@@ -69,8 +69,7 @@ class DetailFragment : BaseFragment() {
         binding.deleteImageButton.setOnClickListener {
             setFragmentResult("111", bundleOf(
                 EVENT_ARG_TASK to viewModel.task.value,
-                EVENT_ARG_POSITION to adapterPosition
-            )
+                EVENT_ARG_POSITION to adapterPosition)
             )
             viewModel.goBackPressed()
         }
