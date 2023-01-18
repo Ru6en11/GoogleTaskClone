@@ -110,7 +110,7 @@ class DetailFragment : BaseFragment() {
 
     private fun renderScreen() = binding.run {
         taskTitleEditText.setText(task.text)
-        additInfoEditText.setText(task.text)
+        additInfoEditText.setText(task.additionalInfo)
         favouriteCheckBox.apply {
             isChecked = task.isFavourite
             setButtonDrawable(if (isChecked) R.drawable.ic_star else R.drawable.ic_star_border)
