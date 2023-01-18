@@ -16,4 +16,8 @@
     <string name="go_back">go back</string>
     <string name="add_to_favourite">add to favourite</string>
     <string name="delete_task">delete task</string>
+    <string name="starred">Starred</string>
+    <string name="my_tasks">My tasks</string>
+    <string name="completed">Completed</string>
+    <string name="create_new_list">Create new list</string>
 </resources>
