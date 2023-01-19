@@ -91,13 +91,13 @@ class TasksFragment : BaseFragment(), TasksListener, TimePickerDialog.Callbacks 
 
         pageSelectorDialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)
         pageSelectorDialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        renderPageSelectorDialog()
 
         binding.createItemFab.setOnClickListener {
             createTaskDialog.show()
         }
 
         binding.bottomAppBar.setNavigationOnClickListener {
+            renderPageSelectorDialog()
             pageSelectorDialog.show()
         }
 
@@ -200,6 +200,24 @@ class TasksFragment : BaseFragment(), TasksListener, TimePickerDialog.Callbacks 
     private fun renderPageSelectorDialog() {
         val dialogBinding = PageSelectorBottomSheetDialogBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         pageSelectorDialog.setContentView(dialogBinding.root)
+
+        when (binding.categoryTabLayout.selectedTabPosition) {
+            0 -> {
+                dialogBinding.favouriteTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                dialogBinding.myTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+                dialogBinding.completedTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+            }
+            1 -> {
+                dialogBinding.favouriteTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+                dialogBinding.myTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                dialogBinding.completedTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+            }
+            2 -> {
+                dialogBinding.favouriteTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+                dialogBinding.myTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+                dialogBinding.completedTasksButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue))
+            }
+        }
 
         dialogBinding.favouriteTasksButton.setOnClickListener {
             val tab = binding.categoryTabLayout.getTabAt(0)
