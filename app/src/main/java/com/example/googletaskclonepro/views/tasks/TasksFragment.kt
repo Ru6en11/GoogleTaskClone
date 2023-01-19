@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -35,6 +36,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
+import java.util.jar.Manifest
 
 const val EVENT_ARG_TASK = "event_arg_task"
 const val EVENT_ARG_POSITION = "event_arg_position"
@@ -182,6 +184,12 @@ class TasksFragment : BaseFragment(), TasksListener, TimePickerDialog.Callbacks 
                 scheduleNotification(task.text, task.additionalInfo)
             }
             viewModel.createTask(task)
+            if (task.text == "Позвонить" && task.additionalInfo.isNotBlank()) {
+                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:${task.additionalInfo}")))
+            }
+            else if (task.text == "Позвонить лучшему преподу") {
+                requireActivity().requestPermissions(arrayOf(android.Manifest.permission.CALL_PHONE), 1)
+            }
             createTaskDialog.dismiss()
         }
         dialogBinding.taskTitleEditText.requestFocus()

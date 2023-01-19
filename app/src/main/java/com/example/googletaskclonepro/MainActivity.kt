@@ -1,5 +1,8 @@
 package com.example.googletaskclonepro
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.foundation.ActivityScopeViewModel
@@ -10,6 +13,7 @@ import com.example.foundation.utils.viewModeCreator
 import com.example.foundation.views.FragmentHolder
 import com.example.googletaskclonepro.databinding.ActivityMainBinding
 import com.example.googletaskclonepro.views.tasks.TasksFragment
+import java.security.Permission
 
 class MainActivity : AppCompatActivity(), FragmentHolder {
 
@@ -72,6 +76,17 @@ class MainActivity : AppCompatActivity(), FragmentHolder {
 
     override fun getActivityScopeViewModel(): ActivityScopeViewModel {
         return activityViewModel
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:89644324111")))
+        }
     }
 
 
