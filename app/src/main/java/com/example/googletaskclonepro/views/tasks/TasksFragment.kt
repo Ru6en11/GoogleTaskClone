@@ -89,12 +89,12 @@ class TasksFragment : BaseFragment(), TasksListener, TimePickerDialog.Callbacks 
 
         createTaskDialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)
         createTaskDialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        renderCreateTaskDialog()
 
         pageSelectorDialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)
         pageSelectorDialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
         binding.createItemFab.setOnClickListener {
+            renderCreateTaskDialog()
             createTaskDialog.show()
         }
 
@@ -151,6 +151,12 @@ class TasksFragment : BaseFragment(), TasksListener, TimePickerDialog.Callbacks 
 
         dialogBinding.additionalInfoImageBtn.setOnClickListener {
             dialogBinding.additionalInfoEditText.visibility = View.VISIBLE
+        }
+        dialogBinding.addInFavouriteCheckBox.apply {
+            isChecked = binding.categoryTabLayout.selectedTabPosition == 0
+            setButtonDrawable(
+                if (isChecked) R.drawable.ic_star else R.drawable.ic_star_border
+            )
         }
         dialogBinding.addInFavouriteCheckBox.setOnCheckedChangeListener { _, isChecked ->
             dialogBinding.addInFavouriteCheckBox.setButtonDrawable(
