@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">GoogleTaskClonePro</string>
+    <string name="main_title">Задачи</string>
+    <string name="app_title">Задачи</string>
+    <string name="create_task_fab_description">Создать задачу</string>
+    <string name="accounts">Аккаунты</string>
+    <string name="more">Еще</string>
+    <string name="favourite_button">добавить в избранное</string>
+    <string name="save">Save</string>
+    <string name="title">Title…</string>
+    <string name="add_details">Add details</string>
+    <string name="set_time">set time</string>
+    <string name="mark_completed">Mark completed</string>
+    <string name="mark_uncompleted">Mark uncompleted</string>
+    <string name="enter_title">Enter title</string>
+    <string name="go_back">go back</string>
+    <string name="add_to_favourite">add to favourite</string>
+    <string name="delete_task">delete task</string>
+    <string name="starred">Starred</string>
+    <string name="my_tasks">My tasks</string>
+    <string name="completed">Completed</string>
+    <string name="create_new_list">Create new list</string>
+    <string name="done">Done</string>
 </resources>

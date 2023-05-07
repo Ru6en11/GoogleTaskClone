@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:cardElevation="10dp">
+
+        <Button
+            android:id="@+id/favourite_tasks_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:drawableLeft="@drawable/ic_star"
+            android:gravity="start|center_vertical"
+            android:text="@string/starred"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:background="#00FFFFFF"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/my_tasks_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        android:drawableLeft="@drawable/ic_transparent"
+        android:gravity="start|center_vertical"
+        android:text="@string/my_tasks"
+        android:textAllCaps="false"
+        android:background="#00FFFFFF"/>
+
+    <Button
+        android:id="@+id/completed_tasks_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/ic_transparent"
+        android:gravity="start|center_vertical"
+        android:text="@string/completed"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:background="#00FFFFFF"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:cardElevation="10dp">
+
+        <Button
+            android:id="@+id/create_new_list_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:drawableLeft="@drawable/ic_add"
+            android:gravity="start|center_vertical"
+            android:text="@string/create_new_list"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:background="#00FFFFFF"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>

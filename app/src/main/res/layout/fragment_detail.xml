@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/go_back_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:backgroundTint="#0000FFFF"
+            android:contentDescription="@string/go_back" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <CheckBox
+            android:id="@+id/favourite_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_star_border"
+            android:backgroundTint="#0000FFFF"
+            android:contentDescription="@string/add_to_favourite" />
+
+        <ImageButton
+            android:id="@+id/delete_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            android:backgroundTint="#0000FFFF"
+            android:contentDescription="@string/delete_task" />
+
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/task_title_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_title"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:padding="4dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/addit_info_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_additional"
+        android:hint="@string/add_details"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:inputType="text"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/add_in_completed_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#0000FFFF"
+        android:textColor="@color/blue"
+        android:textAllCaps="false"
+        android:text="@string/mark_completed"
+        android:layout_gravity="end"/>
+
+
+</LinearLayout>
